@@ -1,0 +1,109 @@
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}
+
+h3 {
+    /*margin: 0px;*/
+    font-size: 20px;
+}
+
+h4 {
+    margin: 20px;
+}
+
+li {
+    font-size: 14px;
+}
+
+.navstyle {
+    border-bottom: 1px black solid;
+}
+
+/*.container{*/
+/*    background-color: #FAF5E4;*/
+/*}*/
+
+.content {
+    width: 100%;
+    margin: auto;
+    margin-top: 1.5rem;
+}
+
+.people-container{
+    margin-top: 1.5rem;
+}
+
+.person-picture{
+    width:150px !important;
+    height:150px !important;
+    border-radius: 50%;
+    /*vertical-align:top; */
+    margin-right: 15px;
+    border:1px solid #999999;
+    object-fit: cover;
+}
+
+.person {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+p {
+    line-height: 200%;
+}
+
+.footer {
+    /*position:absolute;*/
+    /*bottom:0;*/
+    /*height:60px;*/
+}
+
+.footer p {
+    font-size: 12px;
+    margin-top: 1rem;
+}
+
+/* research page */
+
+.research-block {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 100px;
+    /*margin-top: 3rem;*/
+    align-items: flex-start;
+    /*height: 300px;*/
+}
+
+.research-image {
+    object-fit: scale-down;
+    width: 370px;
+    height: auto;
+    margin: 0 10px;
+    /*border-style: solid;*/
+    /*border-color: black;*/
+    /*border-width: 3px;*/
+}
+
+.research-text {
+    margin: 0 10px 0 60px;
+}
+
+.research-text p {
+    line-height: 1.5;
+}
+
+.card {
+    margin: 20px;
+}
+
+/* mobile */
+@media (max-width: 600px) {
+    p {
+        font-size: 16px;
+        line-height: 150%;
+    }
+}
