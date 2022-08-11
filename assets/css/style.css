@@ -1,9 +1,16 @@
 html {
     height: 100%;
 }
+
+
+
+
 body {
     min-height: 100%;
+	position: relative;
+	font-size: 18px;
 }
+
 
 h3 {
     /*margin: 0px;*/
@@ -14,8 +21,16 @@ h4 {
     margin: 20px;
 }
 
+
+ul {
+  list-style-position: outside;
+}
+
+
 li {
-    font-size: 14px;
+    font-size: 16px;
+	line-height: 1.5em;
+	margin-bottom: 15px;
 }
 
 .navstyle {
@@ -26,30 +41,98 @@ li {
 /*    background-color: #FAF5E4;*/
 /*}*/
 
+.container {
+	margin: 50px;
+	
+}
+
+.anchor{
+   display:block;
+   height:20px; /* this is the height of your header */
+   margin-top:-20px; /* this is again negative value of the height of your header */
+   visibility:hidden;
+}
+
+
+.navbar-brand {
+	margin-right: 50px;
+}
+
+.logo-image {
+    object-fit: scale-down;
+    width: 100px;
+    height: auto;
+    margin: 0 10px;
+    /*border-style: solid;*/
+    /*border-color: black;*/
+    /*border-width: 3px;*/
+}
+
+.about {
+    width: 100%;
+    margin: auto;
+    margin-top: 3rem;
+    margin-bottom: -2rem;
+    font-size: 20px;
+}
+
 .content {
     width: 100%;
     margin: auto;
-    margin-top: 1.5rem;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
 }
 
+.block2 {
+	background-color: #FFF3F3;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+/* people section */
+
 .people-container{
-    margin-top: 1.5rem;
+    margin-top: 2rem;
+    margin-left: 2rem;
+}
+
+.person a:visited {
+	color: black;
+}
+
+.person a:hover {
+	color: gray;
+}
+
+.person-desc {
+	font-style: italic;
+	line-height: 1em;
+	font-size: 14px;
+	display: block;
+}
+
+.person-email {
+	line-height: 0;
+	font-size: 14px;
+	display: block;
 }
 
 .person-picture{
-    width:150px !important;
-    height:150px !important;
+    width:130px !important;
+    height:130px !important;
     border-radius: 50%;
     /*vertical-align:top; */
     margin-right: 15px;
     border:1px solid #999999;
     object-fit: cover;
+	
 }
 
 .person {
-    display: flex;
-    flex-direction: row;
     align-items: center;
+	margin: 20px;
+	display: flex;
+	flex-direction: row;
 }
 
 p {
@@ -62,17 +145,20 @@ p {
     /*height:60px;*/
 }
 
+
 .footer p {
     font-size: 12px;
     margin-top: 1rem;
 }
 
-/* research page */
+/* research section */
 
 .research-block {
     display: flex;
     flex-direction: row;
-    margin-bottom: 100px;
+    margin-bottom: 50px;
+    margin-left: 2rem;
+	margin-right: 2rem;
     /*margin-top: 3rem;*/
     align-items: flex-start;
     /*height: 300px;*/
@@ -96,14 +182,73 @@ p {
     line-height: 1.5;
 }
 
+/* course section */
+
 .card {
     margin: 20px;
 }
 
 /* mobile */
-@media (max-width: 600px) {
-    p {
-        font-size: 16px;
+@media only screen and (max-width: 1000px) {
+    body {
+		margin: 0px;
+		overflow-wrap: break-word;
+	}
+	
+	.container {
+		margin: 0px;
+	}
+	
+	.content {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	
+	.card {
+		margin: 0px;
+	}
+	
+	.people-container {
+		margin: 0px;
+		max-width: 80%;
+	}
+	
+	.course {
+		margin: 0px;
+	}
+	
+	.row {
+		display: block;
+		/*margin-left: auto;
+		margin-right: auto;*/
+		margin-bottom: 20px;
+		/*width: 50%;*/
+	}
+	
+	.person {
+		margin-bottom: 20px;
+	}
+	
+	p {  
+		font-size: 16px;
         line-height: 150%;
     }
+	
+	.research-image {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 40px;
+		width: 100%;
+	}
+	
+	.research-text {
+		display: block;
+		margin-left: 20px;
+		margin-right: 20px;
+	}
+	
+	.research-block {
+		display: block;
+	}
 }
