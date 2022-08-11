@@ -3,44 +3,317 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link href="./assets/css/style.css" rel="stylesheet">
-
     <title>TAU Phonological Computation Lab</title>
+
 </head>
 <body>
 <div class="container">
-<nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top navstyle">
+<nav class="nav navbar navbar-expand-lg navbar-light bg-white sticky-top navstyle">
     <div class="container-fluid">
+	<img class="logo-image" src="assets/img/taulogo.png">
         <a class="navbar-brand" href="./index.html">TAU Phonological Computation Lab</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-link active" aria-current="page" href="./index.html">About</a>
-                <a class="nav-link" href="./people.html">People</a>
-                <a class="nav-link" href="./research.html">Research</a>
-                <a class="nav-link" href="./publications.html">Publications</a>
-                <a class="nav-link" href="./courses.html">Courses</a>
-                <a class="nav-link" href="#">Contact</a>
+                <a class="nav-link" href="./index.html#">About</a>
+		<!-- <a class="nav-link" href="./index.html#research">Research</a>*/ -->
+		<a class="nav-link" href="./index.html#research">Research</a>
+                <a class="nav-link" href="./index.html#people">People</a>
+                <a class="nav-link" href="./index.html#publications">Publications</a>
+                <a class="nav-link" href="./index.html#courses">Courses</a>
+                <a class="nav-link" href="./index.html#contact">Contact</a>
             </div>
         </div>
     </div>
 </nav>
 
-
-<div class="content">
+<span class="anchor" id="about"></span>
+<div class="about">
     <p>
-    The goal of the Phonological Computation Lab is to uncover the cognitive architecture of phonology -- the component of the human mind that puts together linguistic sound representations. To achieve this goal, we integrate methods from theoretical linguistics and computer science: we reverse-engineer the sound systems of individual natural languages, look for abstract universal generalizations that hold across languages, and construct machine-learning algorithms that simulate human phonological acquisition.
+    The goal of the Tel Aviv University Phonological Computation Lab is to uncover the cognitive architecture of phonology, the component of the human mind that puts together linguistic sound representations. To achieve this goal, we integrate methods from theoretical linguistics and computer science: we reverse-engineer the sound systems of individual natural languages, look for abstract universal generalizations that hold across languages, and construct machine-learning algorithms that simulate human phonological acquisition.
+    </p>
+    <p>
+
+The lab is affiliated with the <a href="https://en-humanities.tau.ac.il/linguistics">Linguistics Department</a> and the <a href="https://en-sagol.tau.ac.il/">Sagol School of Neuroscience</a> at Tel Aviv University.
+    </p>
+
+</div>
+
+<span class="anchor" id="research"></span>
+<div class="content block2">
+	<h2>Research</h2><br>
+	<div class="research-block">
+		<img class="research-image" src="assets/img/research2.jpg">
+		<div class="research-text">
+			<h3>The phonology of endangered Judeo-Arabic languages</h3>
+			<p>
+				There are at least eight understudied Jewish varieties of Arabic spoken in Israel by Jewish immigrants from Arab countries (Algeria, Egypt, Iraq, Libya, Morocco, Syria, Tunisia, and Yemen). Those varieties are endangered and are unfortunately expected to disappear in the next decades, as they are not passed on to children as native languages. Our goal is to record, document, and analyze the sound systems of those varieties, investigate their consequences for human cognition, and make the data and results available for the general public. This project thus serves the dual goals of contributing to the preservation of Judeo-Arabic varieties for future generations, while also contributing to our understanding of the human language capacity.
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="research-block">
+		<img class="research-image" src="assets/img/research1.png">
+		<div class="research-text">
+		<h3>Phonological universals</h3>
+		<p>At first sight, the phonological systems of the world’s languages seem remarkably diverse: Hebrew, Korean, Akan, and Ukrainian sound nothing alike. But when we carefully investigate languages at a sufficient level of abstraction, great similarities unravel.  Are there universal phonological rules or principles that hold in every language? Do they reflect innate restrictions on the kinds of phonological systems that humans can acquire? What can they teach us about the computation of phonology in the mind?
+
+			We investigate these questions by constructing candidate universals, testing them using cross-linguistic studies of phonological systems, and examining their consequences for theories of phonology.
+			</br></br>
+			<u>Examples of research projects on phonological universals:</u></br>
+			<ul>
+			<li> Is the distribution of stress ever directly sensitive to segmental features?</li>
+			<li> Do two phonological processes ever interact like they must apply simultaneously?</li>
+			<li> Is there an intrinsic ordering between stress processes and segmental processes?</li>
+			<li> Is suppletive allomorphy ever sensitive to phrasal phonology?</li>
+			</ul>
+		</p>
+		</div>
+	</div>
+	<hr>
+	<div class="research-block">
+		<img class="research-image" src="assets/img/research3.png">
+		<div class="research-text">
+			<h3>Opacity</h3>
+			<p>
+				Opaque generalizations - generalizations that lose support on the surface - have played an important role in the development of phonological theory since the 1950's and remain at the center of debate until this day. Do humans indeed acquire generalizations that are not observed on the surface? If so, how are such generalizations discovered? Which opaque patterns are attested in natural languages and which are unattested? What can the typology of opacity teach us about the architecture of phonology? We address these questions by discovering and analyzing attested cases of opacity in the world’s languages, by comparing theories of phonology based on their ability to account for opacity, and by constructing unsupervised learning algorithms that acquire opacity.
+				</br></br>
+				<u>Examples of research projects on opacity:</u></br>
+			<ul>
+			<li>	 Self-counterfeeding vowel harmony in Akan</li>
+			<li>	 Productive phrasal opacity in Gua</li>
+			<li>	 Shifting interactions and countershifting opacity</li>
+			<li>	 Across-the-board opacity in Judeo-Baghdadi Arabic</li>
+			<li>	 Morpheme structure constraints and blocking in non-derived environments</li>
+			</ul>
+			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="research-block" style="margin-bottom: 10px">
+		<img class="research-image" src="assets/img/research4.png">
+		<div class="research-text">
+			<h3>Computational models of phonological learning</h3>
+			<p>
+				Children acquiring the morpho-phonology of their language are assumed to face multiple non-trivial learning challenges. They need to learn from distributional evidence alone 	(for example, without systematic negative evidence), learn non-trivial dependencies between morphological segmentation and phonological processes, as well as complex phonological phenomena that are not immediately apparent on the surface, such as optionality and opacity.
+				</br></br>
+				How do they learn in the face of such challenges, and what can theories of learning teach us about the division of labor between nature and nurture? In collaboration with the <a href="https://taucompling.github.io/">TAU Computational Linguistics Lab</a>, we have been exploring a theory of learning based on the principle of Minimum Description Length – a mathematical approximation of Occam’s Razor – according to which children look for the hypothesis that provides the simplest description of their input. We have been implementing computational learning algorithms for phonological acquisition based on this principle under competing phonological theories, with the goal of comparing theories of phonology based on their predictions regarding learning, and advancing our understanding of human phonological acquisition.
+				</br></br>
+				<u>Examples of learning projects:</u></br>
+				<ul>
+				<li> An unsupervised learning algorithm for Optimality Theory grammars, acquiring the constraints, their ranking, and the underlying representations</br>
+				<li> An unsupervised learning algorithm for rule-based phonology, acquiring morphological segmentation simultaneously with the rules, their ordering, and the underlying representations</br>
+				<li> Learning opacity from distributional evidence</br>
+				<li> Learning abstract underlying representations</br>
+				<li> A learnability argument for constraints on underlying representations</br>
+				</ul>
+			</p>
+		</div>
+	</div>
+</div>
+
+<span class="anchor" id="people"></span>
+<div class="content">
+    <div class="people-container">
+	<h2>People</h2><br>
+    <div class="row">
+		<h4>
+            Researchers:
+		</h4>
+        <div class="col-md-auto person">
+          <img src="./assets/img/people/ezer.png" class="person-picture">
+            <div class="person-text">
+			<a href="https://en-humanities.tau.ac.il/profile/rasin"><h6>Ezer Rasin</h6></a>
+			<p class="person-desc">Principal Investigator</p>
+			<p class="person-email">rasin@tauex.tau.ac.il</p>
+			</div>
+        </div>
+        <div class="col-md-auto person">
+			<img src="./assets/img/people/si.png" class="person-picture">
+			<div class="person-text">
+			<a href="http://siberrebi.top"><h6>Si Berrebi</h6></a>
+			<p class="person-desc">Postdoc</p>
+			<p class="person-email">cberebi@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<a ><h6>Eyal Marco</h6></a>
+			<p class="person-desc">MA student</p>
+			<p class="person-email">eyalmrc@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/moty.png" class="person-picture">
+			<div class="person-text">
+			<a ><h6>Moty Bistry</h6></a>
+			<p class="person-desc">MA student</p>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+	
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<a ><h6>Michal Wasserlauf Dalal</h6></a>
+			<p class="person-desc">MA student</p>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+	</div>
+	<hr>
+
+	<div class="row">
+		<h4>
+            Research assistants:
+		</h4>
+        <div class="col-md-auto person">
+          <img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+            <h6>Alona Golubchik</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+        </div>
+        <div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Areej Khourieh</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Lina Tsyganov</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Imry Ziv</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+
+	</div>
+	<hr>
+
+	<div class="row">
+		<h4>
+            TAU collaborators:
+		</h4>
+	<div class="col-md-auto person">
+			  <img src="./assets/img/people/roni.jpg" class="person-picture">
+            <div class="person-text">
+			<a href="https://english.tau.ac.il/profile/rkatzir"><h6>Roni Katzir</h6></a>
+			<p class="person-desc"><a href="https://taucompling.github.io/">Lab</a></p>
+			<p class="person-email">rkatzir@tauex.tau.ac.il</p>
+			</div>
+		</div>
+        <div class="col-md-auto person">
+          <img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+            <h6>Vera Rusyanova</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+        </div>
+			
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Alma Frischoff</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Ben Flickstein</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+		<div class="col-md-auto person">
+			<img src="./assets/img/people/avatar.png" class="person-picture">
+			<div class="person-text">
+			<h6>Yanir Mor</h6>
+			<p class="person-email">example@gmail.com</p>
+			</div>
+		</div>
+	</div>
+	</div>
+
+</div>
+
+<span class="anchor" id="publications"></span>
+<div class="content block2">
+	<h2>Publications</h2><br>
+	<ul>
+		<li>Rasin, Ezer, Iddo Berger, Nur Lan, Itamar Shefi, and Roni Katzir. 2021. <a href="https://jlm.ipipan.waw.pl/index.php/JLM/article/view/266/256">Approaching explanatory adequacy in phonology using Minimum Description Length</a>. <em>Journal of Language Modelling</em> 9, vol. 1, pp. 17-66.</li>
+	<li>Ampofo, Joana Serwaa and Ezer Rasin. <a href="/sites/personal.tau.ac.il/files/media_server/1882/AmpofoRasin_2021_Akan.pdf">True Self-counterfeeding Vowel Harmony in Akan Serial Verb Constructions</a>. In Farinella, Alessa and Angelica Hill (eds.)<em>, Proceedings of NELS 51</em>, vol. 1, pp. 11&ndash;23. </li>
+	<li>Rasin, Ezer, Omer Preminger, and David Pesetsky. <a href="/sites/personal.tau.ac.il/files/media_server/1882/RasinPremingerPesetsky2021_WCCFL.pdf">A Re-evaluation of Arad&rsquo;s Argument for Roots</a>. To appear in <em>Proceedings of the 39th West Coast Conference on Formal Linguistics</em>.</li>
+	<li>Gleim, Daniel and Ezer Rasin. <a href="/sites/personal.tau.ac.il/files/media_server/1882/GleimRasin_2021.pdf">Transderivational Faithfulness but not Cyclic Architectures Can Generate Transparent Countercyclic Effects</a>. To appear in <em>Proceedings of the 39th West Coast Conference on Formal Linguistics</em>. </li>
+	<li>Rasin, Ezer. 2021. <a href="/sites/personal.tau.ac.il/files/media_server/1882/Rasin2021_Countershifting.pdf">Shifting Interactions and Countershifting Opacity: A Note on Opacity in Harmonic Serialism</a>. To appear in <em>Linguistic Inquiry</em>. </li>
+	<li>Rasin, Ezer and Athulya Aravind. 2020. <a href="https://rdcu.be/cch8Q">The Nature of the Semantic Stimulus: The Acquisition of <em>Every</em> as a Case Study</a>. <em>Natural Language Semantics</em>. https://doi.org/10.1007/s11050-020-09168-6</li>
+	<li>Rasin, Ezer, Itamar Shefi, and Roni Katzir. 2020. <a href="/sites/personal.tau.ac.il/files/media_server/1882/RasinShefiKatzir2020_UnifiedApproach.pdf">A Unified Approach to Several Learning Challenges in Phonology</a>. In Asatryan, Mariam, Song,&nbsp;Yixiao, and&nbsp;Whitmal, Ayana (eds.), <em>Proceedings of NELS 50</em>, vol. 3, pp. 73-87.</li>
+	<li>Rasin, Ezer and Roni Katzir. 2020. <a href="/sites/personal.tau.ac.il/files/media_server/1882/RasinKatzir%202020%20A%20conditional%20learnability%20argument%20for%20constraints%20on%20underlying%20representations.pdf">A Conditional Learnability Argument for Constraints on Underlying Representations</a>. Journal of Linguistics, 56(4), 745-773. https:/doi.org/10.1017/S0022226720000146</li>
+	<li>Rasin, Ezer and Radan Nasrallah. 2020. Feeding-Duke-of-York Derivations in Nazarene Arabic and Their Implications for Phonological Architecture. Ms., Leipzig University and TAU.</li>
+	<li>Rasin, Ezer. 2020. <a href="/sites/personal.tau.ac.il/files/media_server/1882/Rasin%202019%20Evidence%20against%20sonority%20driven%20stress%20in%20Nanti.pdf">Evidence Against Sonority-Driven Stress in Nanti</a>. In Baird, Maggie and Pesetsky, Jonathan (eds.), <em>Proceedings of NELS 49</em>, vol. 3, pp. 59-72.</li>
+
+	</ul>
+</div>
+
+<span class="anchor" id="courses"></span>
+<div class="content">
+	<h2>Courses</h2><br>
+	<div class="course">
+		<div class="course-body">
+			<h5 class="course-title">Opacity and phonological architecture</h5>
+			<h6 class="course-subtitle mb-2 text-muted">Fall semester</h6>
+			<p class="course-text">
+Opaque generalizations - generalizations that lose support on the surface - have played an important role in the development of phonological theory since the 1950's and remain at the center of debate until this day. In this course, we will examine the types of opacity attested in the world's languages and discuss their consequences for phonological architecture. In particular, we will compare serial theories (like rule-based phonology), parallel theories (like Optimality Theory), and their combinations (like Stratal OT); we will examine the evidence for abstract levels of representation and empty categories (such as traces) in phonology; and we will discuss the relationship between opacity and iterative or cyclic rule application. In addition, we will critically evaluate the empirical evidence suggesting that humans can acquire different kinds of opacity, taking into consideration results from experiments and the evolution of languages over time.			</p>
+		</div>
+	</div>
+	<hr>
+	<div class="course">
+		<div class="course-body">
+			<h5 class="course-title">The phonology-morphology interface</h5>
+			<h6 class="course-subtitle mb-2 text-muted">Fall semester</h6>
+			<p class="course-text">
+				This seminar will cover linguistic phenomena that have implications for the theory of the interaction between phonology and morphology. These phenomena include cyclic stress effects, the relationship between affix order and phonology, phonologically-conditioned suppletive allomorphy, and blocking in nonderived environments, among others. Examples of theoretical questions we will discuss include whether morphology precedes phonology (as in Distributed Morphology) or whether the two modules are interleaved (as in Lexical Phonology and Morphology), whether phonology is sensitive to syntactic phases, whether allomorph selection takes place in the phonology, and whether phonological computation is cyclic or transderivational.                </p>
+		</div>
+	</div>
+	<hr>
+	<div class="course">
+		<div class="course-body">
+			<h5 class="course-title">Computational phonology</h5>
+			<h6 class="course-subtitle mb-2 text-muted">Spring semester</h6>
+			<p class="course-text">
+				This seminar covers computational tools that can inform the study of phonology. In the first part of the semester, we will explore recent advances in formal language theory. Focusing on the sub-regular region of the Chomsky Hierarchy of formal languages, we will discuss the computational complexity of phonological patterns attested in natural language, as well as the complexity of unattested hypothetical patterns. We will also get familiar with computational implementations of rule-based phonology and Optimality Theory. In this part of the seminar we will ask questions like: are stress and tone more complex than segmental processes? How can an optimal surface form be selected from among an infinite candidate set using graph theory? What is the power of Optimality Theory's optimization? <br>
+In the second part of the semester, we will review a variety of competing machine-learning algorithms from the phonological literature, including supervised and unsupervised algorithms and probabilistic and non-probabilistic algorithms, and discuss their advantages and disadvantages as candidates for a theory of human phonological acquisition. In this part we will ask questions like: What is the role of simplicity in the acquisition of rules and constraints? How can token frequency affect phonological acquisition? Can opaque generalizations be acquired without morphological or semantic knowledge?
+                </p>
+		</div>
+	</div>
+</div>	
+
+<div class="content block2" id="contact">
+    <h2>Contact</h2><br>
+	<p>
+		You are welcome to contact us at: <a href="mailto:rasin@tauex.tau.ac.il">TBD@gmail.com</a>. <br>
+		Our address is: Department of Linguistics, Webb 408, Tel Aviv University, Ramat Aviv, 69978.
     </p>
 </div>
 
+
 <div class="footer">
-    <p>All rights reserved &copy; TAU Phonological Computation Lab 2022</p>
 </div>
 </div>
 
