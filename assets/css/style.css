@@ -73,7 +73,6 @@ li {
     margin: auto;
     margin-top: 3rem;
     margin-left: 1.5rem;
-
     margin-bottom: -3.5rem;
     font-size: 20px;
 }
@@ -89,6 +88,10 @@ li {
 	background-color: #E9DFE7;
 	padding-top: 30px;
 	padding-bottom: 30px;
+}
+
+.contact-block {
+	padding-left: 30px;
 }
 
 /* people section */
