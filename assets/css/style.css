@@ -72,19 +72,19 @@ li {
     width: 100%;
     margin: auto;
     margin-top: 3rem;
-    margin-bottom: -2rem;
-    font-size: 20px;
+    margin-bottom: -3.5rem;
+    font-size: 23px;
 }
 
 .content {
     width: 100%;
     margin: auto;
     margin-top: 3rem;
-    margin-bottom: 3rem;
+    margin-bottom: 0rem;
 }
 
 .block2 {
-	background-color: #FFF3F3;
+	background-color: #fdf7fc;
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
