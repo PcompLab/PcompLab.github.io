@@ -159,12 +159,12 @@ li {
 }
 
 .person {
+	min-width: 27.5%;
     	align-items: center;
 	margin: 20px;
 	display: flex;
-	flex-direction: row;
+	flex-direction:row;
 }
-
 .separator{
 	margin-bottom:30px
 }
@@ -238,7 +238,7 @@ p {
 	
 .logo-image {
     object-fit: scale-down;
-    width: 50px;
+    width: 60px;
     height: auto;
     margin: 0 0px;
     /*border-style: solid;*/
