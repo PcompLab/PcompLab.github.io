@@ -68,10 +68,11 @@ li {
     /*border-width: 3px;*/
 }
 
+
 .about {
     width: 100%;
     margin: auto;
-    margin-top: 3rem;
+    margin-top: 2rem;
     margin-left: 1.5rem;
     margin-bottom: -3.5rem;
     font-size: 20px;
@@ -84,21 +85,25 @@ li {
     margin-bottom: 0rem;
 }
 
+.block1 {
+	margin-left: 1.5rem;
+
+}
+
 .block2 {
 	background-color: #E9DFE7;
 	padding-top: 30px;
 	padding-bottom: 30px;
+	padding-left: 25px;
+	padding-right: 20px;
+
 }
 
-.contact-block {
-	padding-left: 30px;
-}
 
 /* people section */
 
 .people-container{
     margin-top: 2rem;
-    margin-left: 2rem;
 }
 
 .person a:visited {
@@ -162,8 +167,8 @@ p {
     display: flex;
     flex-direction: row;
     margin-bottom: 50px;
-    margin-left: 2rem;
-	margin-right: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
     /*margin-top: 3rem;*/
     align-items: flex-start;
     /*height: 300px;*/
