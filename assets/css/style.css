@@ -210,13 +210,37 @@ p {
 	
 	.container {
 		margin: 0px;
+		padding-left: 10px;
+		padding-right: 10px;
+
 	}
 	
+.logo-image {
+    object-fit: scale-down;
+    width: 50px;
+    height: auto;
+    margin: 0 0px;
+    /*border-style: solid;*/
+    /*border-color: black;*/
+    /*border-width: 3px;*/
+}
 	.content {
 		margin-left: 0px;
 		margin-right: 0px;
+
 	}
 	
+	.block1{
+		margin: 0px;
+		margin-top: 50px;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.block2{
+		margin-left: 0px;
+		margin-right: 0px;
+
+	}
 	.card {
 		margin: 0px;
 	}
