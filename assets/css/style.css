@@ -262,13 +262,8 @@ div {
 }
 
 .logo-image {
-    object-fit: scale-down;
-    width: 80px;
-    height: auto;
-    margin: 0 0px;
-    /*border-style: solid;*/
-    /*border-color: black;*/
-    /*border-width: 3px;*/
+	display:none;
+
 }
 	.content {
 		margin-left: 0px;
