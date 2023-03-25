@@ -1,5 +1,6 @@
 html {
     height: 100%;
+    direction: rtl;
 }
 
 
@@ -8,7 +9,8 @@ body {
     	min-height: 100%;
 	position: relative;
 	font-size: 18px;
-
+ font-family: "Rubik", serif;
+	  	
 }
 
 div {
@@ -20,18 +22,15 @@ h1 {
 	font-size: 50px;
 	margin-top: 50px;
 	margin-bottom: 20px;
-	font-family: "Helvetica";
 }
 
 h2 {
-	font-family: "Helvetica";
-	
 	
 }
 h3 {
     /*margin: 0px;*/
-    font-size: 20px;
-
+    font-size: 25px;
+	/* font-weight: bold; */
 }
 
 h4 {
@@ -66,6 +65,16 @@ li {
 	
 }
 
+.publist{
+    direction: ltr;
+
+}
+
+.publist h2{
+    direction: rtl;
+
+}
+
 .anchor{
    display:block;
    height:20px; /* this is the height of your header */
@@ -81,14 +90,14 @@ li {
 }
 
 .navbar-brand {
-	margin-right: 30px;
+	margin-left: 30px;
 }
 
 .logo-image {
     object-fit: scale-down;
     width: 100px;
     height: auto;
-    margin: 0 10px;
+    margin: 0 0px;
     /*border-style: solid;*/
     /*border-color: black;*/
     /*border-width: 3px;*/
@@ -99,8 +108,8 @@ li {
     width: 100%;
     margin: auto;
     margin-top: 2rem;
-    margin-left: 1.5rem;
-    padding-right: 60px;
+    margin-right: 1.5rem;
+    padding-left: 60px;
 
     margin-bottom: -3.5rem;
     font-size: 20px;
@@ -117,8 +126,8 @@ li {
 }
 
 .block1 {
-	margin-left: 1.5rem;
-	padding-right: 60px
+	margin-right: 1.5rem;
+	padding-left: 60px
 
 }
 
@@ -126,8 +135,8 @@ li {
 	background-color: #E9DFE7;
 	padding-top: 30px;
 	padding-bottom: 30px;
-	padding-left: 25px;
 	padding-right: 25px;
+	padding-left: 25px;
 
 }
 
@@ -166,7 +175,7 @@ li {
     height:130px !important;
     border-radius: 50%;
     /*vertical-align:top; */
-    margin-right: 15px;
+    margin-left: 15px;
     border:1px solid #999999;
     object-fit: cover;
 	
@@ -205,8 +214,19 @@ p {
     display: flex;
     flex-direction: row;
     margin-bottom: 50px;
-    margin-left: 1rem;
     margin-right: 1rem;
+    margin-left: 1rem;
+    /*margin-top: 3rem;*/
+    align-items: flex-start;
+    /*height: 300px;*/
+}
+
+.research-block-small {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 0px;
+    margin-right: 1rem;
+    margin-left: 1rem;
     /*margin-top: 3rem;*/
     align-items: flex-start;
     /*height: 300px;*/
@@ -216,15 +236,19 @@ p {
     object-fit: scale-down;
     width: 370px;
     height: auto;
-    margin: 0 10px;
+    margin-left: 10px;
     /*border-style: solid;*/
     /*border-color: black;*/
     /*border-width: 3px;*/
 }
 
+
+
 .research-text {
-    margin: 0 10px 0 60px;
+    margin: 0 30px 0 30px;
 }
+
+
 
 .research-text p {
     line-height: 1.5;
@@ -260,7 +284,7 @@ h1 {
 }
 
 div {
-  text-align: left;
+  text-align: right;
 }
 
 .logo-image {
@@ -268,14 +292,14 @@ div {
 
 }
 	.content {
-		margin-left: 0px;
 		margin-right: 0px;
+		margin-left: 0px;
 
 	}
 
 .about {
  
-	padding-left: 20px;
+	padding-right: 20px;
     margin: 0;
 		margin-bottom: -10px;
 
@@ -284,12 +308,12 @@ div {
 	.block1{
 		margin: 0px;
 		margin-top: 50px;
-		padding-left: 10px;
 		padding-right: 10px;
+		padding-left: 10px;
 	}
 	.block2{
-		margin-left: 0px;
 		margin-right: 0px;
+		margin-left: 0px;
 
 	}
 	.card {
@@ -308,7 +332,7 @@ div {
 	.row {
 		display: block;
 		/*margin-left: auto;
-		margin-right: auto;*/
+		margin-left: auto;*/
 		margin-bottom: 20px;
 		/*width: 50%;*/
 	}
@@ -324,16 +348,16 @@ div {
 	
 	.research-image {
 		display: block;
-		margin-left: auto;
 		margin-right: auto;
+		margin-left: auto;
 		margin-bottom: 40px;
 		width: 100%;
 	}
 	
 	.research-text {
 		display: block;
-		margin-left: 0px;
 		margin-right: 0px;
+		margin-left: 0px;
 	}
 	
 	.research-block {
