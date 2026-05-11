@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OT Patch Evaluator</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f4f6f9;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: #1a1a2e;
+    }
+
+    .layout {
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .panel {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .rules-panel {
+      min-width: 260px;
+      flex: 0 0 260px;
+    }
+
+    .results-panel {
+      flex: 1 1 0;
+      min-width: 0;
+      position: relative;
+    }
+
+    .scroll-wrapper {
+      overflow-x: auto;
+    }
+
+    .scroll-arrow {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 3rem;
+      bottom: 0;
+      pointer-events: none;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.95));
+      align-items: center;
+      justify-content: flex-end;
+      padding-right: 0.4rem;
+      font-size: 1.3rem;
+      color: #4f46e5;
+    }
+
+    .scroll-arrow.visible { display: flex; }
+
+    .panel-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #888;
+      margin-bottom: 1rem;
+    }
+
+    .row-label {
+      font-weight: 600;
+      color: #333;
+      white-space: nowrap;
+    }
+
+    .result-row td {
+      background: #f8f7ff;
+      border-top: 2px solid #c7d2fe;
+    }
+
+    .result-row:hover td { background: #f0edff !important; }
+
+    .result-label {
+      font-weight: 700;
+      color: #4f46e5;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.75rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 0.25rem;
+    }
+
+    .rule-item:hover { background: #f4f6f9; }
+    .rule-item.checked { background: #eef2ff; }
+
+    .rule-item input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .rule-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+
+    .hint {
+      font-size: 0.75rem;
+      color: #aaa;
+      margin-top: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #888;
+      padding: 0 0.4rem 0.6rem;
+      border-bottom: 1px solid #eee;
+    }
+
+    tbody tr:hover td { background: #f9faff; }
+
+    tbody td {
+      padding: 0.4rem 0.4rem;
+      font-size: 0.875rem;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td { border-bottom: none; }
+
+    .patch-name {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .badge-V    { background: #dcfce7; color: #15803d; }
+    .badge-X    { background: #fee2e2; color: #b91c1c; }
+    .badge-Q    { background: #fef9c3; color: #854d0e; }
+    .badge-VX   { background: #dbeafe; color: #1d4ed8; }
+    .badge-empty { color: #ccc; font-weight: 400; font-size: 0.9rem; }
+
+    .empty-state {
+      text-align: center;
+      padding: 2rem;
+      color: #aaa;
+      font-size: 0.875rem;
+    }
+
+    .legend {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px solid #eee;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+
+<h1>OT Patch Evaluator</h1>
+
+<div class="layout">
+  <div class="panel rules-panel">
+    <div class="panel-title">Select Patches</div>
+    <div id="rule-list"></div>
+    <div class="hint">Select one or more patches to evaluate</div>
+  </div>
+
+  <div class="panel results-panel">
+    <div class="panel-title">Results</div>
+    <div class="scroll-wrapper" id="scroll-wrapper">
+      <div id="results-container">
+        <div class="empty-state">Select at least one opacity type to see results</div>
+      </div>
+    </div>
+    <div class="scroll-arrow" id="scroll-arrow">›</div>
+    <div class="legend">
+      <div class="legend-item"><span class="badge badge-V">V</span> Generated</div>
+      <div class="legend-item"><span class="badge badge-VX">V/X</span> Partial</div>
+      <div class="legend-item"><span class="badge badge-Q">?</span> Uncertain</div>
+      <div class="legend-item"><span class="badge badge-X">X</span> Not generated</div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const OPACITY_TYPE_LABELS = {
+    type_1_counterfeeding:                        "Type 1 - Counterfeeding",
+    type_1_counterbleeding:                       "Type 1 - Counterbleeding",
+    type_2_self_destructive_feeding:              "Type 2 - Self-destructive feeding",
+    type_2_fed_counterfeeding:                    "Type 2 - Fed-counterfeeding",
+    type_3_countershifting:                       "Type 3 - Countershifting",
+    type_4_self_counterfeeding:                   "Type 4 - Self-counterfeeding",
+    type_4_self_counterbleeding:                  "Type 4 - Self-counterbleeding",
+    type_5_surface_true_counterfeeding:           "Type 5 - Surface-true counterfeeding",
+    type_5_rule_sandwiching:                      "Type 5 - Rule sandwiching",
+    type_5_non_vacuous_dy:                        "Type 5 - Non-vacuous DY",
+    type_5_three_level_opacity:                   "Type 5 - Three level opacity",
+    type_6_intra_stratal_opacity:                 "Type 6 - Intra-stratal opacity",
+    type_7_morphologically_induced_overapplication_a: "Type 7 - Morphologically-induced overapplication (a)",
+    type_7_morphologically_induced_overapplication_b: "Type 7 - Morphologically-induced overapplication (b)",
+    type_8_mutual_counterfeeding:                 "Type 8 - Mutual counterfeeding",
+    type_8_mutual_counterbleeding:                "Type 8 - Mutual counterbleeding",
+  };
+
+  const PATCHES = [
+    {
+      name: "Local Constraint Conjunction",
+      type_1_counterfeeding:                        "V",
+      type_1_counterbleeding:                       "X",
+      type_2_self_destructive_feeding:              "X",
+      type_2_fed_counterfeeding:                    "X",
+      type_3_countershifting:                       "X",
+      type_4_self_counterfeeding:                   "X",
+      type_4_self_counterbleeding:                  "X",
+      type_5_surface_true_counterfeeding:           "X",
+      type_5_rule_sandwiching:                      "X",
+      type_5_non_vacuous_dy:                        "X",
+      type_5_three_level_opacity:                   "X",
+      type_6_intra_stratal_opacity:                 "V",
+      type_7_morphologically_induced_overapplication_a: "X",
+      type_7_morphologically_induced_overapplication_b: "X",
+      type_8_mutual_counterfeeding:                 "X",
+      type_8_mutual_counterbleeding:                "X",
+    },
+    {
+      name: "Max[F]",
+      type_1_counterfeeding:                        "X",
+      type_1_counterbleeding:                       "V/X",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+    {
+      name: "Comparative Markedness",
+      type_1_counterfeeding:                        "V",
+      type_1_counterbleeding:                       "X",
+      type_2_self_destructive_feeding:              "X",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "X",
+      type_4_self_counterfeeding:                   "V",
+      type_4_self_counterbleeding:                  "X",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "X",
+      type_5_three_level_opacity:                   "X",
+      type_6_intra_stratal_opacity:                 "V",
+      type_7_morphologically_induced_overapplication_a: "X",
+      type_7_morphologically_induced_overapplication_b: "X",
+      type_8_mutual_counterfeeding:                 "V",
+      type_8_mutual_counterbleeding:                "X",
+    },
+    {
+      name: "Contextual Faithfulness",
+      type_1_counterfeeding:                        "?",
+      type_1_counterbleeding:                       "?",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+    {
+      name: "Output-Output Faithfulness",
+      type_1_counterfeeding:                        "?",
+      type_1_counterbleeding:                       "?",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+    {
+      name: "Sympathy Theory",
+      type_1_counterfeeding:                        "V",
+      type_1_counterbleeding:                       "V",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "V",
+      type_4_self_counterbleeding:                  "V",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "X",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "V",
+      type_7_morphologically_induced_overapplication_a: "X",
+      type_7_morphologically_induced_overapplication_b: "X",
+      type_8_mutual_counterfeeding:                 "V/X",
+      type_8_mutual_counterbleeding:                "V",
+    },
+    {
+      name: "Turbidity",
+      type_1_counterfeeding:                        "?",
+      type_1_counterbleeding:                       "?",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+    {
+      name: "Containment",
+      type_1_counterfeeding:                        "?",
+      type_1_counterbleeding:                       "?",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+    {
+      name: "Harmonic Serialism",
+      type_1_counterfeeding:                        "X",
+      type_1_counterbleeding:                       "X",
+      type_2_self_destructive_feeding:              "X",
+      type_2_fed_counterfeeding:                    "X",
+      type_3_countershifting:                       "V",
+      type_4_self_counterfeeding:                   "X",
+      type_4_self_counterbleeding:                  "X",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "X",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "V",
+      type_7_morphologically_induced_overapplication_a: "X",
+      type_7_morphologically_induced_overapplication_b: "X",
+      type_8_mutual_counterfeeding:                 "X",
+      type_8_mutual_counterbleeding:                "X",
+    },
+    {
+      name: "OT-CC",
+      type_1_counterfeeding:                        "V",
+      type_1_counterbleeding:                       "V",
+      type_2_self_destructive_feeding:              "V",
+      type_2_fed_counterfeeding:                    "X",
+      type_3_countershifting:                       "V",
+      type_4_self_counterfeeding:                   "X",
+      type_4_self_counterbleeding:                  "X",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "X",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "V",
+      type_7_morphologically_induced_overapplication_a: "X",
+      type_7_morphologically_induced_overapplication_b: "X",
+      type_8_mutual_counterfeeding:                 "X",
+      type_8_mutual_counterbleeding:                "X",
+    },
+    {
+      name: "Stratal OT",
+      type_1_counterfeeding:                        "V",
+      type_1_counterbleeding:                       "V",
+      type_2_self_destructive_feeding:              "V",
+      type_2_fed_counterfeeding:                    "V",
+      type_3_countershifting:                       "V",
+      type_4_self_counterfeeding:                   "X",
+      type_4_self_counterbleeding:                  "X",
+      type_5_surface_true_counterfeeding:           "V",
+      type_5_rule_sandwiching:                      "V",
+      type_5_non_vacuous_dy:                        "V",
+      type_5_three_level_opacity:                   "V",
+      type_6_intra_stratal_opacity:                 "X",
+      type_7_morphologically_induced_overapplication_a: "V",
+      type_7_morphologically_induced_overapplication_b: "V",
+      type_8_mutual_counterfeeding:                 "X",
+      type_8_mutual_counterbleeding:                "X",
+    },
+    {
+      name: "Serial Markedness Reduction",
+      type_1_counterfeeding:                        "?",
+      type_1_counterbleeding:                       "?",
+      type_2_self_destructive_feeding:              "?",
+      type_2_fed_counterfeeding:                    "?",
+      type_3_countershifting:                       "?",
+      type_4_self_counterfeeding:                   "?",
+      type_4_self_counterbleeding:                  "?",
+      type_5_surface_true_counterfeeding:           "?",
+      type_5_rule_sandwiching:                      "?",
+      type_5_non_vacuous_dy:                        "?",
+      type_5_three_level_opacity:                   "?",
+      type_6_intra_stratal_opacity:                 "?",
+      type_7_morphologically_induced_overapplication_a: "?",
+      type_7_morphologically_induced_overapplication_b: "?",
+      type_8_mutual_counterfeeding:                 "?",
+      type_8_mutual_counterbleeding:                "?",
+    },
+  ];
+</script>
+<script>
+  const VALUE_PRIORITY = ["V", "V/X", "?", "X"];
+
+  const INVERTED_TYPES = new Set([
+    "type_8_mutual_counterfeeding",
+    "type_8_mutual_counterbleeding",
+  ]);
+
+  function badgeHtml(value, type) {
+    const invert = INVERTED_TYPES.has(type);
+    if (value === "V")   return `<span class="badge ${invert ? "badge-X" : "badge-V"}">V</span>`;
+    if (value === "V/X") return `<span class="badge badge-VX">V/X</span>`;
+    if (value === "?")   return `<span class="badge badge-Q">?</span>`;
+    if (value === "X")   return `<span class="badge ${invert ? "badge-V" : "badge-X"}">X</span>`;
+    return `<span class="badge badge-empty">—</span>`;
+  }
+
+  function getCombinedValue(values) {
+    const filled = values.filter(v => v !== "");
+    if (filled.length === 0) return "";
+    for (const priorityValue of VALUE_PRIORITY) {
+      for (const value of filled) {
+        if (value === priorityValue) return priorityValue;
+      }
+    }
+    return "X";
+  }
+
+  function getOpacityTypes() {
+    const types = [];
+    for (const key of Object.keys(PATCHES[0])) {
+      if (key !== "name") types.push(key);
+    }
+    return types;
+  }
+
+  function formatLabel(key) {
+    if (OPACITY_TYPE_LABELS[key]) return OPACITY_TYPE_LABELS[key];
+    return key.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+  }
+
+  function buildPatchList() {
+    const container = document.getElementById("rule-list");
+    for (const patch of PATCHES) {
+      const label = document.createElement("label");
+      label.className = "rule-item";
+
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.value = patch.name;
+      checkbox.addEventListener("change", () => {
+        label.classList.toggle("checked", checkbox.checked);
+        renderResults();
+      });
+
+      const span = document.createElement("span");
+      span.className = "rule-label";
+      span.textContent = patch.name;
+
+      label.appendChild(checkbox);
+      label.appendChild(span);
+      container.appendChild(label);
+    }
+  }
+
+  function getSelectedPatches() {
+    const checked = document.querySelectorAll("#rule-list input:checked");
+    return Array.from(checked).map(cb => cb.value);
+  }
+
+  function renderResults() {
+    const selectedNames = getSelectedPatches();
+    const container = document.getElementById("results-container");
+
+    if (selectedNames.length === 0) {
+      container.innerHTML = '<div class="empty-state">Select at least one patch to see results</div>';
+      return;
+    }
+
+    const opacityTypes = getOpacityTypes();
+    const selectedPatches = PATCHES.filter(p => selectedNames.includes(p.name));
+
+    const table = document.createElement("table");
+
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    for (const col of ["Patch", ...opacityTypes]) {
+      const th = document.createElement("th");
+      th.textContent = formatLabel(col);
+      headerRow.appendChild(th);
+    }
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement("tbody");
+
+    const valuesByType = {};
+    for (const type of opacityTypes) {
+      valuesByType[type] = [];
+    }
+
+    for (const patch of selectedPatches) {
+      const tr = document.createElement("tr");
+
+      const nameTd = document.createElement("td");
+      nameTd.className = "row-label";
+      nameTd.textContent = patch.name;
+      tr.appendChild(nameTd);
+
+      for (const type of opacityTypes) {
+        const value = patch[type];
+        valuesByType[type].push(value);
+        const td = document.createElement("td");
+        td.innerHTML = badgeHtml(value, type);
+        tr.appendChild(td);
+      }
+
+      tbody.appendChild(tr);
+    }
+
+    const resultRow = document.createElement("tr");
+    resultRow.className = "result-row";
+
+    const resultLabelTd = document.createElement("td");
+    resultLabelTd.innerHTML = '<span class="result-label">Combined result</span>';
+    resultRow.appendChild(resultLabelTd);
+
+    for (const type of opacityTypes) {
+      const combined = getCombinedValue(valuesByType[type]);
+      const td = document.createElement("td");
+      td.innerHTML = badgeHtml(combined, type);
+      resultRow.appendChild(td);
+    }
+
+    tbody.appendChild(resultRow);
+    table.appendChild(tbody);
+
+    container.innerHTML = "";
+    container.appendChild(table);
+  }
+
+  const scrollWrapper = document.getElementById("scroll-wrapper");
+  const scrollArrow = document.getElementById("scroll-arrow");
+
+  function updateScrollArrow() {
+    const canScroll = scrollWrapper.scrollWidth > scrollWrapper.clientWidth;
+    const atEnd = scrollWrapper.scrollLeft + scrollWrapper.clientWidth >= scrollWrapper.scrollWidth - 2;
+    scrollArrow.classList.toggle("visible", canScroll && !atEnd);
+  }
+
+  scrollWrapper.addEventListener("scroll", updateScrollArrow);
+  window.addEventListener("resize", updateScrollArrow);
+
+  const _origRenderResults = renderResults;
+  renderResults = function() {
+    _origRenderResults();
+    requestAnimationFrame(updateScrollArrow);
+  };
+
+  buildPatchList();
+  renderResults();
+</script>
+</body>
+</html>
